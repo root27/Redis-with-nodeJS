@@ -2,7 +2,7 @@
 
 Redis tested with JSON data on Node.js
 
-
+- Tested with express router
 
 
 ### Install

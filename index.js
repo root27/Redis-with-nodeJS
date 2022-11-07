@@ -2,6 +2,7 @@ const express = require("express");
 
 const redis = require("redis")
 
+const Test = require("./routes/test");
 
 const app = express();
 
@@ -17,7 +18,9 @@ client.on("connect", function (err) {
 });
 
 
+app.use(express.json());
 
+app.use("/redis",Test);
 
 app.get("/", async(req,res) => {
 
@@ -39,6 +42,7 @@ app.get("/", async(req,res) => {
 
     client.set("user_info", JSON.stringify(info));
 
+
     res.send(info)
 
 
@@ -48,14 +52,26 @@ app.get("/", async(req,res) => {
 
 app.get("/test-redis", async(req,res) => {
 
-    const value = await client.get("user_info")
+    const user = {
+        id: 1,
+        name: "test",
+        mail: "testmail"
+    };
 
-    console.log(value);
 
-    res.send(value);
+    const address = "test234";
+    const email = "testing";
+
+    const phone = 12312412;
 
 
-    client.del("user_info")
+    const info = {user, address, email, phone};
+
+
+    client.set("user_info", JSON.stringify(info));
+
+    res.send(info)
+
 
 
 })
